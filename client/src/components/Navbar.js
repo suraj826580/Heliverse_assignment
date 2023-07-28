@@ -69,7 +69,7 @@ const Navbar = () => {
               Create User
             </Button>
             <Button
-              onClick={() => navigate("/create-user")}
+              onClick={() => navigate("/team")}
               color="#fff"
               rounded="md"
               bg="#3b49df"

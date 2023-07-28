@@ -121,8 +121,8 @@ const CreateUser = () => {
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </Select>
             </FormControl>
             <FormControl
@@ -153,11 +153,11 @@ const CreateUser = () => {
                 name="domain"
                 value={formData.domain}
                 onChange={handleChange}>
-                <option value="sales">Sales</option>
-                <option value="finance">Finance</option>
-                <option value="marketing">Marketing</option>
-                <option value="it">IT</option>
-                <option value="management">Management</option>
+                <option value="Sales">Sales</option>
+                <option value="Finance">Finance</option>
+                <option value="Marketing">Marketing</option>
+                <option value="IT">IT</option>
+                <option value="Management">Management</option>
               </Select>
             </FormControl>
             <FormControl

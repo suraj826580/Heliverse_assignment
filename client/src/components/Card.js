@@ -17,8 +17,9 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 export default function Card() {
-  const { data, loading } = useContext(Context);
+  const { data, loading, handleAddTeam } = useContext(Context);
   const navigate = useNavigate();
+
   return (
     <Box minH={"100vh"}>
       {!loading ? (
@@ -84,7 +85,11 @@ export default function Card() {
                       </Flex>
                       <Center mt={5}>
                         <ButtonGroup>
-                          <Button size={"sm"}>Add to Team</Button>
+                          <Button
+                            size={"sm"}
+                            onClick={() => handleAddTeam(item)}>
+                            Add to Team
+                          </Button>
                           <Button
                             size={"sm"}
                             onClick={() => navigate(`/${item._id}`)}>

@@ -14,7 +14,6 @@ const object = {
 };
 
 export default function ContextProvider({ children }) {
-  const [filterValue, setfilterValue] = useState("");
   const [formData, setformData] = useState(object);
   const [loading, setloading] = useState(false);
   const [searchValue, setsearchValue] = useState("");
@@ -22,10 +21,23 @@ export default function ContextProvider({ children }) {
   const [data, setData] = useState({});
   const limit = 20;
   const timer = useRef("");
+  const TeamMembers = JSON.parse(localStorage.getItem("teamMember")) || [];
 
-  const handleFilter = (e) => {
-    setfilterValue((pre) => e.target.value);
-    console.log(filterValue);
+  // Add Team member in localStorage
+  const handleAddTeam = (user) => {
+    let flag = true;
+    for (let i = 0; i < TeamMembers.length; i++) {
+      if (TeamMembers[i]._id === user._id) {
+        flag = false;
+      }
+    }
+    if (flag) {
+      TeamMembers.push(user);
+      alert("Member Added");
+    } else {
+      alert("Already exist in you team");
+    }
+    localStorage.setItem("teamMember", JSON.stringify(TeamMembers));
   };
 
   // for grab the user Details
@@ -114,8 +126,7 @@ export default function ContextProvider({ children }) {
 
   useEffect(() => {
     getData();
-  }, [page
-  ]);
+  }, [page]);
 
   return (
     <Context.Provider
@@ -130,8 +141,7 @@ export default function ContextProvider({ children }) {
         setformData,
         handleSubmit,
         handleDelete,
-        filterValue,
-        handleFilter,
+        handleAddTeam,
       }}>
       {children}
     </Context.Provider>
