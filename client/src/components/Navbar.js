@@ -8,6 +8,9 @@ import {
   Spacer,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useContext } from "react";
+import { Context } from "./Context";
+import { useNavigate } from "react-router-dom";
 
 const IconButton = ({ children }) => {
   return (
@@ -24,6 +27,8 @@ const IconButton = ({ children }) => {
 };
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { handleSearch, searchValue } = useContext(Context);
   return (
     <Box
       py="2"
@@ -36,6 +41,7 @@ const Navbar = () => {
       <Container maxW="1280px" px={4} mx="auto">
         <HStack spacing={4}>
           <Image
+            onClick={() => navigate("/")}
             visibility={["hidden", "visible", "visible", "visible"]}
             position={["absolute", "static", "static", "static"]}
             alt="dev logo"
@@ -45,6 +51,8 @@ const Navbar = () => {
           />
           <Input
             maxW="36rem"
+            value={searchValue}
+            onChange={handleSearch}
             placeholder="Search..."
             borderColor={useColorModeValue("gray.300", "white")}
             borderRadius="5px"
@@ -53,14 +61,24 @@ const Navbar = () => {
           <Spacer />
           <HStack spacing={3}>
             <Button
+              onClick={() => navigate("/create-user")}
               color="#fff"
               rounded="md"
               bg="#3b49df"
               _hover={{ bg: "#323ebe" }}>
-              Team
+              Create User
+            </Button>
+            <Button
+              onClick={() => navigate("/create-user")}
+              color="#fff"
+              rounded="md"
+              bg="#3b49df"
+              _hover={{ bg: "#323ebe" }}>
+              Your Team
             </Button>
           </HStack>
         </HStack>
+        
       </Container>
     </Box>
   );

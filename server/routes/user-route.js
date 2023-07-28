@@ -30,8 +30,19 @@ userRoute.post("/", async (req, res) => {
 // for send the user
 
 userRoute.get("/", async (req, res) => {
+  const { search } = req.query;
+
   try {
-    const usersData = await userModel.find();
+    let usersData = await userModel.find();
+    if (search) {
+      usersData = await userModel.find({
+        $or: [
+          {
+            first_name: { $regex: search },
+          },
+        ],
+      });
+    }
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;
     const startIndex = (page - 1) * limit;
