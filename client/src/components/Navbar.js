@@ -7,27 +7,16 @@ import {
   Input,
   Spacer,
   useColorModeValue,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons"; // Import the HamburgerIcon
 import { useContext } from "react";
 import { Context } from "./Context";
 import { useNavigate } from "react-router-dom";
 
-const IconButton = ({ children }) => {
-  return (
-    <Button
-      padding="0.4rem"
-      width="auto"
-      height="auto"
-      borderRadius="100%"
-      bg="transparent"
-      _hover={{ bg: "#f6f6f6" }}>
-      {children}
-    </Button>
-  );
-};
-
 const Navbar = () => {
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { handleSearch, searchValue } = useContext(Context);
   return (
     <Box
@@ -42,8 +31,7 @@ const Navbar = () => {
         <HStack spacing={4}>
           <Image
             onClick={() => navigate("/")}
-            visibility={["hidden", "visible", "visible", "visible"]}
-            position={["absolute", "static", "static", "static"]}
+            visibility={["visible", "visible", "visible", "visible"]}
             alt="dev logo"
             w={"auto"}
             h={12}
@@ -59,7 +47,7 @@ const Navbar = () => {
             d={{ base: "none", md: "block" }}
           />
           <Spacer />
-          <HStack spacing={3}>
+          <HStack spacing={3} display={{ base: "none", md: "flex" }}>
             <Button
               onClick={() => navigate("/create-user")}
               color="#fff"
@@ -77,8 +65,39 @@ const Navbar = () => {
               Your Team
             </Button>
           </HStack>
+          {/* HamburgerIcon for mobile */}
+          <Button
+            display={{ base: "flex", md: "none" }} // Show on small screens, hide on medium and larger screens
+            onClick={isOpen ? onClose : onOpen}
+            bg="transparent"
+            _hover={{ bg: "#f6f6f6" }}>
+            <HamburgerIcon boxSize={6} />
+          </Button>
         </HStack>
-        
+        {/* Conditional rendering for the mobile menu */}
+        {isOpen && (
+          <Box mt={4}>
+            <Button
+              onClick={() => navigate("/create-user")}
+              color="#fff"
+              w="100%"
+              rounded="md"
+              bg="#3b49df"
+              _hover={{ bg: "#323ebe" }}
+              mb={2}>
+              Create User
+            </Button>
+            <Button
+              onClick={() => navigate("/team")}
+              color="#fff"
+              w="100%"
+              rounded="md"
+              bg="#3b49df"
+              _hover={{ bg: "#323ebe" }}>
+              Your Team
+            </Button>
+          </Box>
+        )}
       </Container>
     </Box>
   );

@@ -46,7 +46,7 @@ export default function ContextProvider({ children }) {
     setloading(true);
     return axios({
       method: "post",
-      url: "http://localhost:8080/users",
+      url: `${process.env.REACT_APP_BASE_URL}`,
       headers: { "Content-Type": "application/json" },
       data: formData,
     })
@@ -71,7 +71,7 @@ export default function ContextProvider({ children }) {
   const getData = () => {
     setloading(true);
     axios
-      .get(`http://localhost:8080/users?page=${page}&limit=${limit}`)
+      .get(`${process.env.REACT_APP_BASE_URL}?page=${page}&limit=${limit}`)
       .then((res) => {
         setData((pre) => res.data);
       })
@@ -87,7 +87,7 @@ export default function ContextProvider({ children }) {
     timer.current = setTimeout(() => {
       searchValue.length > 1
         ? axios
-            .get(`http://localhost:8080/users?search=${searchValue}`)
+            .get(`${process.env.REACT_APP_BASE_URL}?search=${searchValue}`)
             .then((res) => {
               setData((pre) => res.data);
             })
@@ -96,7 +96,9 @@ export default function ContextProvider({ children }) {
               setloading(false);
             })
         : axios
-            .get(`http://localhost:8080/users?page=${page}&limit=${limit}`)
+            .get(
+              `${process.env.REACT_APP_BASE_URL}?page=${page}&limit=${limit}`
+            )
             .then((res) => {
               setData((pre) => res.data);
             })
@@ -114,10 +116,13 @@ export default function ContextProvider({ children }) {
   const handleDelete = (id) => {
     return axios({
       method: "delete",
-      url: `http://localhost:8080/users/${id}`,
+      url: `${process.env.REACT_APP_BASE_URL}/${id}`,
       headers: { "Content-Type": "application/json" },
     })
-      .then((res) => res)
+      .then((res) => {
+        getData();
+        return res;
+      })
       .catch((err) => err)
       .finally(() => {
         setloading(false);

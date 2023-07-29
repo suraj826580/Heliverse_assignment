@@ -21,7 +21,7 @@ export default function SingleCard() {
   const toast = useToast();
   const { id } = useParams();
   const [object, setObject] = useState({});
-  const { handleDelete } = useContext(Context);
+  const { handleDelete, handleAddTeam } = useContext(Context);
 
   const deletefun = (id) => {
     handleDelete(id)
@@ -50,7 +50,7 @@ export default function SingleCard() {
   useEffect(() => {
     (() => {
       axios
-        .get(`http://localhost:8080/users/${id}`)
+        .get(`https://heliverse-zp88.onrender.com/users/${id}`)
         .then((res) => {
           setObject(() => res.data);
         })
@@ -102,6 +102,7 @@ export default function SingleCard() {
         </Stack>
         <Stack mt={8} direction={"row"} spacing={4}>
           <Button
+            onClick={() => handleAddTeam(object)}
             flex={1}
             fontSize={"sm"}
             rounded={"full"}

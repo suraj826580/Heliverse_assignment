@@ -29,6 +29,26 @@ userRoute.post("/", async (req, res) => {
 
 // for send the user
 
+userRoute.get("/filter", async (req, res) => {
+  const { domain, gender, available } = req.query;
+  try {
+    if (domain) {
+      let usersData = await userModel.find({ domain });
+      res.status(200).send(usersData);
+    }
+    if (gender) {
+      let usersData = await userModel.find({ gender });
+      res.status(200).send(usersData);
+    }
+    if (available) {
+      let usersData = await userModel.find({ available });
+      res.status(200).send(usersData);
+    }
+  } catch (error) {
+    res.status(400).send({ msg: error });
+  }
+});
+
 userRoute.get("/", async (req, res) => {
   const { search } = req.query;
 

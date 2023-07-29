@@ -21,21 +21,22 @@ export default function Card() {
   const navigate = useNavigate();
 
   return (
-    <Box minH={"100vh"}>
+    <Box minH={"100vh"} p={2}>
       {!loading ? (
         <>
           {" "}
           <Grid
             gridTemplateColumns={[
               "repeat(1,1fr)",
+              "repeat(1,1fr)",
               "repeat(2,1fr)",
-              "repeat(3,1fr)",
-              "repeat(3,1fr)",
+              "repeat(4,1fr)",
             ]}
             width={"90%"}
             py={10}
             px={5}
             gap={10}
+            justifyContent={"center"}
             margin={"auto"}>
             {data.data?.length <= 0 ? (
               <GridItem colSpan={4}>
@@ -45,26 +46,26 @@ export default function Card() {
               data.data?.map((item, index) => {
                 return (
                   <GridItem
+                    boxShadow={"lg"}
                     key={index}
-                    boxShadow={"3px 3px 5px 2px gray"}
-                    borderRadius={"10px"}>
-                    <Box maxW="sm" p={4} h={"100%"} shadow="md">
-                      <Flex
-                        justifyContent={"space-evenly"}
-                        alignItems={"center"}>
-                        <VStack justifyContent={"center"} gap={5}>
+                    borderRadius={"10px"}
+                    p={2}
+                    boxSizing="border-box">
+                    <Box m={2}>
+                      <Flex gap={5} boxSizing={"border-box"}>
+                        <VStack gap={2}>
                           <Image
                             src={item.avatar}
                             objectFit={"cover"}
                             alt={`${item.first_name}`}
                           />
-                          <Badge borderRadius="full" px="2" colorScheme="teal">
+                          <Badge borderRadius="full" colorScheme="teal">
                             {item.gender}
                           </Badge>
                         </VStack>
-                        <Box>
+                        <VStack gap={1}>
                           <Box d="flex" alignItems="baseline">
-                            <Text fontWeight="semibold" fontSize="xl">
+                            <Text fontWeight="semibold">
                               {item.first_name} {item.last_name}
                             </Text>
                           </Box>
@@ -81,7 +82,7 @@ export default function Card() {
                               {item.available}
                             </Text>
                           </Box>
-                        </Box>
+                        </VStack>
                       </Flex>
                       <Center mt={5}>
                         <ButtonGroup>
